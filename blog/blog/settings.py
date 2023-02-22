@@ -75,9 +75,13 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.mysql', # 数据库引擎
+        'HOST': '112.74.187.253', # 数据库主机
+        'PORT': 30904, # 数据库端口
+        'USER': 'itheima', # 数据库用户名
+        'PASSWORD': 'marco@2011_123456', # 数据库用户密码
+        'NAME': 'blog' # 数据库名字
+    },
 }
 
 
