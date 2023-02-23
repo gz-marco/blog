@@ -193,6 +193,10 @@ LOGGING = {
     }
 }
 
+#替换 系统的User 来使用我们自己定义的User
+# 配置信息 为 ‘子应用名.模型类型’
+AUTH_USER_MODEL='users.User'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
