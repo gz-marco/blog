@@ -152,17 +152,6 @@ var vm = new Vue({
                 })
         },
         //提交
-        on_submit:function () {
-            this.check_mobile();
-            this.check_password();
-            this.check_password2();
-            this.check_sms_code();
 
-            if (this.mobile_error == true || this.password_error == true || this.password2_error == true
-                || this.image_code_error == true || this.sms_code_error == true) {
-                // 不满足注册条件：禁用表单
-                window.event.returnValue = false;
-            }
-        }
     }
 });

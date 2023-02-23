@@ -34,4 +34,6 @@ urlpatterns = [
     # app_name 子应用空间
     path('', include(('users.urls', 'users'), namespace='users')),
     # path('',log),
+
+    path('',include(('home.urls','home'),namespace='home')),
 ]
