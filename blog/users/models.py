@@ -11,7 +11,8 @@ class User(AbstractUser):
     #t简介信息
     user_desc = models.CharField(max_length=500,blank=True)
 
-    # 修改认证字段为
+    # 修改认证字段为 手机号
+    USERNAME_FIELD = 'mobile'
 
     class Meta:
         db_table='tb_users'  #修改表名
