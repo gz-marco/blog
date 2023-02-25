@@ -69,12 +69,19 @@ class RegisterView(View):
         except DatabaseError as e:
             logger.error(e)
             return HttpResponseBadRequest('注册失败')
+        from django.contrib.auth import login
+        login(request,user)
         # 4.返回响应跳转到指定页面
         # redirect 是进行重写向
         # reverse 是可以通过 namespace:name 来获取到视图所对应的路由
-        return redirect(reverse('home:index'))
+        response = redirect(reverse('home:index'))
         # 暂时返回一个注册成功的信息，后期再实现跳转到指定页面
         # return HttpResponse('注册成功，跳转到指定页面')
+        # 设置cookie信息，以方便首页中 用户信息展示的判断和用户信息的提示
+        response.set_cookie('is_login',True)
+        response.set_cookie('username',user.username,max_age=7*24*3600)
+
+        return response
 
 
 from django.http.response import HttpResponseBadRequest
