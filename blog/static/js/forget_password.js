@@ -153,12 +153,13 @@ var vm = new Vue({
             this.check_password();
             this.check_password2();
             this.check_sms_code();
+             alert('on_submit');
 
-            if (this.mobile_error == true || this.password_error == true || this.password2_error == true
+            /*if (this.mobile_error == true || this.password_error == true || this.password2_error == true
                 || this.image_code_error == true || this.sms_code_error == true) {
                 // 不满足注册条件：禁用表单
                 window.event.returnValue = false;
-            }
+            }*/
         }
     }
 });

@@ -198,6 +198,13 @@ LOGGING = {
 # 配置信息 为 ‘子应用名.模型类型’
 AUTH_USER_MODEL='users.User'
 
+# 修改系统的未登录跳转连接
+LOGIN_URL='/login/'
+
+# 设置上传的图上 保存到media目录下
+MEDIA_ROOT = os.path.join(BASE_DIR,'media/')
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

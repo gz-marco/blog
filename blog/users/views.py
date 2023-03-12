@@ -291,6 +291,7 @@ class ForgetPasswordView(View):
         password=request.POST.get('password')
         password2=request.POST.get('password2')
         smscode=request.POST.get('sms_code')
+        print('post')
         # 2.验证数据
         #     2.1 判断参数是否齐全
         if not all([mobile,password,password2,smscode]):
@@ -331,4 +332,55 @@ class ForgetPasswordView(View):
         # 6.进行页面跳转，跳转到登录页面
         response=redirect(reverse('users:login'))
         # 7.返回响应
+        return response
+
+from django.contrib.auth.mixins import  LoginRequiredMixin
+# LoginRequireMinxin
+# 如果用户未登录的话，则会进行默认的跳转
+# 默认的跳转连接是： accounts/login/?next=xxx
+class UserCenterView(LoginRequiredMixin,View):
+
+    def get(self,request):
+        # 获取登录用户信息
+        user=request.user
+        # 组织获取用户的信息
+        context = {
+            'username': user.username,
+            'mobile': user.mobile,
+            'avatar': user.avatar.url if user.avatar else None,
+            'user_desc': user.user_desc
+        }
+        return render(request,'center.html',context=context)
+
+    def post(self, request):
+        """
+        1.接收参数
+        2.将参数保存起来
+        3.更新cookie中的username信息
+        4.刷新当前页面（重定向操作）
+        5.返回响应
+        :param request:
+        :return:
+        """
+        user = request.user
+        # 1.接收参数
+        username = request.POST.get('username', user.username)
+        user_desc = request.POST.get('desc', user.user_desc)
+        avatar = request.FILES.get('avatar')
+        # 2.将参数保存起来
+        try:
+            user.username = username
+            user.user_desc = user_desc
+            if avatar:
+                user.avatar = avatar
+            user.save()
+        except Exception as e:
+            logger.error(e)
+            return HttpResponseBadRequest('修改失败，请稍后再试')
+        # 3.更新cookie中的username信息
+        # 4.刷新当前页面（重定向操作）
+        response = redirect(reverse('users:center'))
+        response.set_cookie('username', user.username, max_age=14 * 3600 * 24)
+
+        # 5.返回响应
         return response
